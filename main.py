@@ -1,25 +1,16 @@
-import os
-import time
+from ui_main import Ui_MainWindow
+import sys
+from PySide6.QtWidgets import QMainWindow, QApplication
+class App(QMainWindow):
+    def __init__(self):
+        super().__init__()
 
-path = "C:\\Program Files (x86)\\Steam\\steamapps\\downloading"
-timeSec = 10000 # Время, после которого вырубится комп, когда игра скачается
-
-def shutdown():
-    os.system(f"shutdown -s -t {timeSec}")
-
-def checker():
-        
-        while True:
-
-            time.sleep(30)
-
-            if len(os.listdir(path)) == 0:
-                print(f"Загрузка завершена. Выключение через {timeSec} секунд.")
-                shutdown()
-                break
-
-            else: 
-                print("Загрузка продолжается...")
-                time.sleep(30) 
-
-checker()
+        self.ui = Ui_MainWindow()       
+        self.ui.setupUi(self)       
+    
+        self.show()
+ 
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    timer_window = App()
+    sys.exit(app.exec())
