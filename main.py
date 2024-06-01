@@ -10,11 +10,11 @@ def shutdown():
 def checker():
         
         while True:
-            
+
             time.sleep(30)
 
             if len(os.listdir(path)) == 0:
-                print("Загрузка завершена. Выключение через {} секунд.".format(timeSec))
+                print(f"Загрузка завершена. Выключение через {timeSec} секунд.")
                 shutdown()
                 break
 
