@@ -1,6 +1,7 @@
 from ui_main import Ui_MainWindow
 import sys
 from PySide6.QtWidgets import QMainWindow, QApplication
+from threading import Thread
 class App(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -13,4 +14,5 @@ class App(QMainWindow):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     timer_window = App()
-    sys.exit(app.exec())
+    t1 = Thread(target=sys.exit, args=(app.exec(),))
+    t1.start()

@@ -8,8 +8,9 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 from arsenii import add_steam_folder
-from notmain import checker
+from notmain import start_check, cancel
 import tkinter.filedialog as fd
+from threading import Thread
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect, 
@@ -69,11 +70,20 @@ class Ui_MainWindow(object):
     def add_func(self):
         self.toolButton.clicked.connect(lambda: add_steam_folder(fd.askdirectory(title="Выберите папку Steam", initialdir="/")))
         self.checkBox.clicked.connect(lambda: self.checkbox_func())
+        self.timeEdit.timeChanged.connect(lambda: self.time_func())
     
     def checkbox_func(self):
         if self.checkBox.checkState() == Qt.CheckState.Checked:
-            checker()
+            start_check()
+        else:
+            cancel()
+    
+    def time_func(self):
+        time = self.timeEdit.time()
+        timeSec = time.hour() * 3600 + time.minute() * 60 + time.second()
+        return timeSec
             
+        
     
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
