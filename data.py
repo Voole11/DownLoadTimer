@@ -2,6 +2,7 @@ import GPUtil
 import psutil
 import cpuinfo
 import platform
+import wmi
 from psutil import disk_partitions
 
 def get_gpu_info():
@@ -43,6 +44,39 @@ def get_system_info():
     }
 
     return platform_dict
+
+def get_disk_info():
+    disk_info_list = []
+    partitions = psutil.disk_partitions()
+    c = wmi.WMI()
+
+    # Собираем информацию о дисках и их типах
+    disk_types = {}
+    for disk in c.Win32_DiskDrive():
+        if 'SSD' in disk.Model:
+            disk_type = "SSD"
+        else:
+            disk_type = "HDD"
+        disk_types[disk.DeviceID] = disk_type
+
+    for partition in partitions:
+        try:
+            usage = psutil.disk_usage(partition.mountpoint)
+            disk_type = disk_types.get(partition.device, "Неизвестно")
+            disk_info = {
+                "disk_device": partition.device,
+                "disk_total": usage.total,
+                "disk_used": usage.used,
+                "disk_free": usage.free,
+                "disk_usage_percent": usage.percent,
+                "disk_type": disk_type
+            }
+            
+            disk_info_list.append(disk_info)
+        except PermissionError:
+            continue
+
+    return disk_info_list
 
 print(get_disk_info())
 
