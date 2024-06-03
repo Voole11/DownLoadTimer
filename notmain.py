@@ -4,7 +4,8 @@ import time
 from arsenii import steam_folders
 from threading import Thread
 
-timeSec = 999 # Время, после которого вырубится комп, когда игра скачается
+
+timeSec = () # Время, после которого вырубится комп, когда игра скачается
 
 def shutdown():
     os.system(f"shutdown -s -t {timeSec}")

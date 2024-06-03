@@ -10,7 +10,6 @@
 from arsenii import add_steam_folder
 from notmain import start_check, cancel
 import tkinter.filedialog as fd
-from threading import Thread
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect, 

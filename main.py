@@ -2,6 +2,10 @@ from ui_main import Ui_MainWindow
 import sys
 from PySide6.QtWidgets import QMainWindow, QApplication
 from threading import Thread
+
+def timer():
+    time = Ui_MainWindow.time_func()
+    return time 
 class App(QMainWindow):
     def __init__(self):
         super().__init__()
