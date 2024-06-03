@@ -7,9 +7,6 @@
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
-from arsenii import add_steam_folder
-from notmain import start_check, cancel
-import tkinter.filedialog as fd
 
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect, 
@@ -63,27 +60,8 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
 
         QMetaObject.connectSlotsByName(MainWindow)
-        self.add_func()
     # setupUi
-    
-    def add_func(self):
-        self.toolButton.clicked.connect(lambda: add_steam_folder(fd.askdirectory(title="Выберите папку Steam", initialdir="/")))
-        self.checkBox.clicked.connect(lambda: self.checkbox_func())
-        self.timeEdit.timeChanged.connect(lambda: self.time_func())
-    
-    def checkbox_func(self):
-        if self.checkBox.checkState() == Qt.CheckState.Checked:
-            start_check()
-        else:
-            cancel()
-    
-    def time_func(self):
-        time = self.timeEdit.time()
-        timeSec = time.hour() * 3600 + time.minute() * 60 + time.second()
-        return timeSec
-            
-        
-    
+
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.timeEdit.setDisplayFormat(QCoreApplication.translate("MainWindow", u"HH:mm:ss", None))
@@ -92,7 +70,7 @@ class Ui_MainWindow(object):
         self.textBrowser.setHtml(QCoreApplication.translate("MainWindow", u"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
+"</style></head><body style=\" font-family:'Tahoma'; font-size:7.8pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-style:italic;\">\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u043f\u0430\u043f\u043a\u0443 downloading \u0432\u0430\u0448\u0435\u0439 \u0434\u0438\u0440\u0435\u043a\u0442\u043e\u0440\u0438\u0438 Steam </span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:12pt; font-style:italic;\">(.../SteamLibrary/steamapps/downloading)<br />\u0415\u0441\u043b\u0438 \u0442\u0430\u043a\u0438\u0445 \u043f\u0430\u043f\u043e\u043a"
                         " \u043d\u0435\u0441\u043a\u043e\u043b\u044c\u043a\u043e, \u0432\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0438\u0445 \u0432\u0441\u0435 \u0438\u043b\u0438 \u0442\u043e\u043b\u044c\u043a\u043e \u0436\u0435\u043b\u0430\u0435\u043c\u044b\u0435 </span></p></body></html>", None))
