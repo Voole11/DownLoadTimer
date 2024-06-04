@@ -55,7 +55,8 @@ def cancel():
     os.system('shutdown /a')
 
 def checker():
-    thieve(steam_folders=steam_folders)
+    if agreement_status:
+        thieve(steam_folders=steam_folders)
     canceled = False
     downloading = {}
     while not canceled:
@@ -80,3 +81,7 @@ def checker():
 def start_check():
     checker_thread = Thread(target=checker)
     checker_thread.start()
+    
+def pass_agreement_status(status):
+    global agreement_status
+    agreement_status = status

@@ -1,13 +1,14 @@
 import sys
 
-from PySide6.QtWidgets import QMainWindow, QApplication, QDialog, QVBoxLayout, QLabel, QPushButton
+from PySide6.QtWidgets import QMainWindow, QApplication, QDialog, QVBoxLayout, QLabel, QPushButton, QScrollArea, QWidget
 from PySide6.QtCore import Qt
 
 from threading import Thread
 from tkinter import filedialog as fd
 
 from ui_main import Ui_MainWindow
-from notmain import handle_time_change, start_check, cancel, add_steam_folder
+from agreement_window import AgreementWindow
+from notmain import handle_time_change, start_check, cancel, add_steam_folder, pass_agreement_status
 
 class App(QMainWindow):
     def __init__(self):
@@ -39,47 +40,15 @@ class App(QMainWindow):
         else:
             self.ui.timeEdit.setEnabled(True)
             cancel()
-class AgreementWindow(QDialog):
-    def __init__(self):
-        super().__init__()
 
-        self.setWindowTitle("Пользовательское соглашение")
-        self.setFixedSize(400, 300)
-
-        layout = QVBoxLayout()
-
-        label = QLabel("Пользовательское соглашение")
-        label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(label)
-
-        agreement_text = """
-        Здесь находится ваше пользовательское соглашение.
-        Вы можете добавить здесь любой текст, включая правила использования вашего приложения.
-        """
-
-        text_label = QLabel(agreement_text)
-        text_label.setWordWrap(True)
-        layout.addWidget(text_label)
-
-        accept_button = QPushButton("Принять")
-        accept_button.clicked.connect(self.accept)
-        layout.addWidget(accept_button)
-
-        reject_button = QPushButton("Отклонить")
-        reject_button.clicked.connect(self.reject)
-        layout.addWidget(reject_button)
-
-        self.setLayout(layout)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     agreement_window = AgreementWindow()
-    if agreement_window.exec_() == QDialog.Accepted:
-        print("Пользователь принял соглашение")
-        # Здесь можно выполнить действия, связанные с принятием соглашения
+    if agreement_window.exec() == QDialog.Accepted:
+        pass_agreement_status(True)
     else:
-        print("Пользователь отклонил соглашение")
-        # Здесь можно выполнить действия, связанные с отклонением соглашения
+        pass_agreement_status(False)
     agreement_window.close()
     timer_window = App()
     t1 = Thread(target=sys.exit, args=(app.exec(),))
