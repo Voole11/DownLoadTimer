@@ -87,7 +87,7 @@ class Data():
             except PermissionError:
                 continue
 
-        return self.disk_info_list
+        return self.disk_dict
     
     def get_total_dict(self):
         self.total_data_dict = {"gpu_data_total" : self.gpus_dict, 
@@ -98,10 +98,44 @@ class Data():
         return self.total_data_dict
 
 data = Data()
-total_dict = data.get_total_dict()
 
+""" test_CLS = data.get_disk_info()
+test2_CLS = data.get_gpu_info() """
+
+total_dict = data.get_total_dict()
+""" gpu_data_total_CLS = data.get_gpu_info()
+cpu_data_total_CLS = data.get_cpu_info()
+disk_data_total_CLS = data.get_disk_info()
+ram_data_total_CLS = data.get_ram_info()
+system_data_total_CLS = data.get_system_info() """
+
+datalist = []
+
+for key, sub_dict in total_dict.items():
+    for sub_key, value in sub_dict.items():
+        datalist.append({'Category': key, 'Key': sub_key, 'Value': value})
+
+# Преобразуем список словарей в DataFrame
+dfPC = pd.DataFrame(datalist)
+
+#dfPC.to_csv('output.csv', index=False) #Сохраняет это в csv
+
+print(dfPC)
+
+#Датафреймы могут пригодиться, хз
+
+""" dfGPU = pd.DataFrame.from_dict(gpu_data_total_CLS, orient='index', columns=['GPU_CHARACTERICTICS'])
+dfCPU = pd.DataFrame.from_dict(cpu_data_total_CLS, orient='index', columns=['CPU_CHARACTERICTICS'])
+dfDISK = pd.DataFrame.from_dict(disk_data_total_CLS, orient='index', columns=['DISK_CHARACTERICTICS'])
+dfRAM = pd.DataFrame.from_dict(ram_data_total_CLS, orient='index', columns=['DISK_CHARACTERICTICS'])
+dfSYSTEM = pd.DataFrame.from_dict(system_data_total_CLS, orient='index', columns=['DISK_CHARACTERICTICS']) """
+
+#print(f"{dfGPU}, \n \n {dfCPU}, \n \n {dfDISK}, \n \n {dfRAM}, \n \n {dfSYSTEM}")
+
+'''
 for key, value in total_dict.items():
     print(key, value, sep="\n")
-    
-df2 = pd.DataFrame(total_dict.values())
-print(df2)
+'''
+
+
+
