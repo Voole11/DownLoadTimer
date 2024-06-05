@@ -99,15 +99,7 @@ class Data():
 
 data = Data()
 
-""" test_CLS = data.get_disk_info()
-test2_CLS = data.get_gpu_info() """
-
 total_dict = data.get_total_dict()
-""" gpu_data_total_CLS = data.get_gpu_info()
-cpu_data_total_CLS = data.get_cpu_info()
-disk_data_total_CLS = data.get_disk_info()
-ram_data_total_CLS = data.get_ram_info()
-system_data_total_CLS = data.get_system_info() """
 
 datalist = []
 
@@ -122,20 +114,7 @@ dfPC = pd.DataFrame(datalist)
 
 print(dfPC)
 
-#Датафреймы могут пригодиться, хз
 
-""" dfGPU = pd.DataFrame.from_dict(gpu_data_total_CLS, orient='index', columns=['GPU_CHARACTERICTICS'])
-dfCPU = pd.DataFrame.from_dict(cpu_data_total_CLS, orient='index', columns=['CPU_CHARACTERICTICS'])
-dfDISK = pd.DataFrame.from_dict(disk_data_total_CLS, orient='index', columns=['DISK_CHARACTERICTICS'])
-dfRAM = pd.DataFrame.from_dict(ram_data_total_CLS, orient='index', columns=['DISK_CHARACTERICTICS'])
-dfSYSTEM = pd.DataFrame.from_dict(system_data_total_CLS, orient='index', columns=['DISK_CHARACTERICTICS']) """
-
-#print(f"{dfGPU}, \n \n {dfCPU}, \n \n {dfDISK}, \n \n {dfRAM}, \n \n {dfSYSTEM}")
-
-'''
-for key, value in total_dict.items():
-    print(key, value, sep="\n")
-'''
 
 
 
