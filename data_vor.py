@@ -1,10 +1,6 @@
 import glob
 import json
-import GPUtil
-import psutil
-import cpuinfo
-import platform
-import wmi
+
 from psutil import disk_partitions
 
 # Шаблон для поиска файлов с нужным расширением (например, .txt)

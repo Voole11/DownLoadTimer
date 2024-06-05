@@ -19,6 +19,8 @@ class Data():
     def get_gpu_info(self):
         
         self.gpus = GPUtil.getGPUs()
+        if self.gpus == []:
+            self.gpus = ['Some AMD/Intel device'] 
 
         for gpu in self.gpus:
             self.gpus_dict = {
