@@ -97,22 +97,20 @@ class Data():
                                 "ram_data_total" : self.ram_dict}
         return self.total_data_dict
 
-data = Data()
+    def data_output(self):
+        total_dict = self.get_total_dict()
+        datalist = []
+        for key, sub_dict in total_dict.items():
+            for sub_key, value in sub_dict.items():
+                datalist.append({'Category': key, 'Key': sub_key, 'Value': value})
 
-total_dict = data.get_total_dict()
+            # Преобразуем список словарей в DataFrame
+        dfPC = pd.DataFrame(datalist)
 
-datalist = []
+        dfPC.to_csv('output.csv', index=False) #Сохраняет это в csv
 
-for key, sub_dict in total_dict.items():
-    for sub_key, value in sub_dict.items():
-        datalist.append({'Category': key, 'Key': sub_key, 'Value': value})
-
-# Преобразуем список словарей в DataFrame
-dfPC = pd.DataFrame(datalist)
-
-#dfPC.to_csv('output.csv', index=False) #Сохраняет это в csv
-
-print(dfPC)
+        return(dfPC)
+            
 
 
 
